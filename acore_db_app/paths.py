@@ -29,3 +29,6 @@ path_metadata_cache = dir_project_root.joinpath("metadata.pickle")
 path_metadata_auth_cache = dir_project_root.joinpath("metadata_auth.pickle")
 path_metadata_char_cache = dir_project_root.joinpath("metadata_char.pickle")
 path_metadata_world_cache = dir_project_root.joinpath("metadata_world.pickle")
+
+# a local cache of sqlalchemy engine connection info
+path_sqlalchemy_engine_json = dir_project_root.joinpath("sqlalchemy_engine.json")
