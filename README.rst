@@ -50,7 +50,18 @@
 
 Welcome to ``acore_db_app`` Documentation
 ==============================================================================
-Documentation for ``acore_db_app``.
+AzerothCore 魔兽世界服务器后端有一个数据库. 基于数据库我们可以开发出很多有创造力的 App. 这里有两个痛点:
+
+1. 出于安全考虑, 我们只能允许位于 AWS EC2 上的游戏服务器能跟数据库网络直连. 本地的 App 开发, 以及最终的 App 部署都是一个挑战.
+2. 当基于数据库的 App 开发完毕后, 这个 App 以什么形式给最终用户使用? Web App? 桌面 GUI? 网络安全又如何保障?
+
+这个项目就是为了解决这两个痛点而生的. 它本身包含两个组件. 一个是在 AWS EC2 游戏服务器上安装的一套 CLI 程序. 把常用的功能以及输入输出用 CLI 包装好供外部用户调用. 另一个是一个 Remote CLI, 可以让有权限的用户从任何地方远程调用服务器上的 CLI 并获取返回的结果. 这个组件的底层是通过 AWS SSM Run Command 来实现的.
+
+AzerothCore Database Schema Reference:
+
+- https://www.azerothcore.org/wiki/database-auth
+- https://www.azerothcore.org/wiki/database-characters
+- https://www.azerothcore.org/wiki/database-world
 
 
 .. _install:

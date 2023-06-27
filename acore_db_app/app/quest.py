@@ -227,22 +227,33 @@ def get_enriched_quest_data(
 
 
 @logger.pretty_log()
-def complete_latest_n_quest(
+def print_complete_latest_n_quest_gm_commands(
+    character: str,
+    n: int,
+    filtered_enriched_quest_data_list: T.List[EnrichedQuestData],
+):
+    logger.info(f"打印完成 {character!r} 的最新的 {n} 个任务的 GM 命令:")
+    for enriched_quest_data in filtered_enriched_quest_data_list:
+        with logger.nested():
+            enriched_quest_data.get_gm_commands()
+
+
+def get_latest_n_quest_enriched_quest_data(
     orm: Orm,
     character: str,
     locale: LocaleEnum,
     n: int = 3,
-):
-    logger.info(f"打印完成 {character!r} 的最新的 {n} 个任务的 GM 命令:")
+) -> T.List[EnrichedQuestData]:
     character_quest_status_list = list_quest_by_character(
         orm=orm,
         character=character,
     )
-    quest_id_set = {
+    filtered_quest_id_list = [
         character_quest_status.quest
         for character_quest_status in character_quest_status_list
         if character_quest_status.is_incomplete() or character_quest_status.is_failed()
-    }
+    ][:n]
+    filtered_quest_id_set = set(filtered_quest_id_list)
     enriched_quest_data_list = get_enriched_quest_data(
         orm=orm,
         character=character,
@@ -252,8 +263,25 @@ def complete_latest_n_quest(
     filtered_enriched_quest_data_list = [
         enriched_quest_data
         for enriched_quest_data in enriched_quest_data_list
-        if enriched_quest_data.quest_id in quest_id_set
+        if enriched_quest_data.quest_id in filtered_quest_id_set
     ]
-    for enriched_quest_data in filtered_enriched_quest_data_list:
-        with logger.nested():
-            enriched_quest_data.get_gm_commands()
+    return filtered_enriched_quest_data_list
+
+
+def complete_latest_n_quest(
+    orm: Orm,
+    character: str,
+    locale: LocaleEnum,
+    n: int = 3,
+):
+    filtered_enriched_quest_data_list = get_latest_n_quest_enriched_quest_data(
+        orm=orm,
+        character=character,
+        locale=locale,
+        n=n,
+    )
+    print_complete_latest_n_quest_gm_commands(
+        character=character,
+        n=n,
+        filtered_enriched_quest_data_list=filtered_enriched_quest_data_list,
+    )
