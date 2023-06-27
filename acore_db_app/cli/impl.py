@@ -86,6 +86,7 @@ def get_latest_n_quest(
             [
                 dataclasses.asdict(enriched_quest_data)
                 for enriched_quest_data in filtered_enriched_quest_data_list
-            ]
+            ],
+            ensure_ascii=False,
         )
     )
