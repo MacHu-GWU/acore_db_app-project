@@ -1,7 +1,10 @@
 # User Settings
 acore_db_app.egg-info/
 tmp/
-
+metadata.pickle
+metadata_auth.pickle
+metadata_char.pickle
+metadata_world.pickle
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

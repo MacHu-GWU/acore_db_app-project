@@ -20,3 +20,12 @@ bin_pytest = dir_venv_bin / "pytest"
 dir_htmlcov = dir_project_root / "htmlcov"
 path_cov_index_html = dir_htmlcov / "index.html"
 dir_unit_test = dir_project_root / "tests"
+
+
+# ------------------------------------------------------------------------------
+# acore_db_app Related
+# ------------------------------------------------------------------------------
+path_metadata_cache = dir_project_root.joinpath("metadata.pickle")
+path_metadata_auth_cache = dir_project_root.joinpath("metadata_auth.pickle")
+path_metadata_char_cache = dir_project_root.joinpath("metadata_char.pickle")
+path_metadata_world_cache = dir_project_root.joinpath("metadata_world.pickle")
