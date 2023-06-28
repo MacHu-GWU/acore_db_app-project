@@ -49,6 +49,12 @@ class Command:
     def __init__(self):
         self.quest = Quest()
 
+    def hello(self):
+        """
+        Print welcome message.
+        """
+        print("Hello acore db app user!")
+
 
 def run():
     fire.Fire(Command)
