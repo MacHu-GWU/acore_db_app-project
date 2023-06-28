@@ -185,7 +185,7 @@ if __name__ == "__main__":
         extras_require=EXTRA_REQUIRE,
         entry_points={
             "console_scripts": [
-                "acoredb=acore_db_app.cli.main:run",
+                "acdb=acore_db_app.cli.main:run",
             ],
         },
     )
