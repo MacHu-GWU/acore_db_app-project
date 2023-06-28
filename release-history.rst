@@ -15,6 +15,12 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
-0.1.1 (2023-06-20)
+0.1.1 (2023-06-28)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- First release
+**Features and Improvements**
+
+- First release.
+- add the ``acdb`` CLI interface.
+- add the following public API:
+    - ``acore_db_app.api.Orm``
+    - ``acore_db_app.api.app``
