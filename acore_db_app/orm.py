@@ -16,9 +16,6 @@ import sqlalchemy as sa
 
 from .paths import (
     path_metadata_cache,
-    path_metadata_auth_cache,
-    path_metadata_char_cache,
-    path_metadata_world_cache,
 )
 
 
@@ -27,6 +24,7 @@ class Orm:
     """
     一个可以访问所有的数据表对象 ``sqlalchemy.Table`` 的 namespace 类.
     """
+
     engine: sa.engine.Engine
 
     _metadata: sa.MetaData = dataclasses.field(init=False, repr=False)
