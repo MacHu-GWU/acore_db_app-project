@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""
+该模块使用 Sqlalchemy 枚举了所有 azerothcore 中的数据库和数据表对象. 由于里面的表众多,
+我们不可能一一的根据表名, 列名, 列类型来定义, 所以我们用了 metadata.reflect 的方式来自动
+获得所有的表的 Metadata, 并将其缓存到磁盘上, 以便下次使用.
+
+所有的数据库 App 都要使用这个模块来构造 SQL query.
+"""
+
 import pickle
 from functools import cached_property
 
@@ -16,12 +24,17 @@ from .paths import (
 
 @dataclasses.dataclass
 class Orm:
+    """
+    一个可以访问所有的数据表对象 ``sqlalchemy.Table`` 的 namespace 类.
+    """
     engine: sa.engine.Engine
 
     _metadata: sa.MetaData = dataclasses.field(init=False, repr=False)
 
     def _reflect(self) -> sa.MetaData:
         metadata = sa.MetaData()
+        # 注: 只有指定 schema 才能用一个 metadata 来管理多个数据库 (在 MySQL 中是
+        # database, 但在数据库学术领域叫 schema, 例如 Postgres 中就是 schema)
         metadata.reflect(self.engine, schema="acore_auth")
         metadata.reflect(self.engine, schema="acore_characters")
         metadata.reflect(self.engine, schema="acore_world")
@@ -30,6 +43,7 @@ class Orm:
         return metadata
 
     def __post_init__(self):
+        # 如果缓存存在则从缓存读取 metadata, 否则从数据库中 reflect 出来, 再写入缓存
         if path_metadata_cache.exists():
             try:
                 with path_metadata_cache.open("rb") as f:
