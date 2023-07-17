@@ -28,6 +28,6 @@ rprint(res)
 
 app.complete_latest_n_quest(
     orm=orm,
-    character="sa",
-    locale=app.LocaleEnum.zhCN,
+    character="shootingrab",
+    locale=app.LocaleEnum.zhTW,
 )

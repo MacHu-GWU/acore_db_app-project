@@ -14,5 +14,5 @@ server = Server.get(bsm, server_id)
 
 # server.create_ssh_tunnel(path_pem_file)
 # server.list_ssh_tunnel(path_pem_file)
-# server.test_ssh_tunnel()
+server.test_ssh_tunnel()
 # server.kill_ssh_tunnel(path_pem_file)

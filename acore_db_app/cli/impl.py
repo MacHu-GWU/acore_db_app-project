@@ -3,71 +3,34 @@
 import typing as T
 import json
 import dataclasses
-from datetime import datetime
 
 from acore_db_ssh_tunnel.api import create_engine
 from acore_server.api import Server
 
 from ..api import Orm, app
-from ..paths import path_sqlalchemy_engine_json
+from ..cache import cache
 
 
-def get_orm() -> T.Tuple[Orm, str, str, str]:
+@cache.memoize(name="db_info", expire=3600)
+def get_db_info() -> dict:
     server = Server.from_ec2_inside()
-    engine = create_engine(
-        host=server.metadata.rds_inst.endpoint,
-        port=3306,
-        username=server.config.db_username,
-        password=server.config.db_password,
-        db_name="acore_auth",
-    )
-    orm = Orm(engine=engine)
-    return (
-        orm,
-        server.metadata.rds_inst.endpoint,
-        server.config.db_username,
-        server.config.db_password,
-    )
+    return {
+        "db_host": server.metadata.rds_inst.endpoint,
+        "db_username": server.config.db_username,
+        "db_password": server.config.db_password,
+    }
 
 
 def get_orm_from_ec2_inside() -> Orm:
-    # no cache
-    if path_sqlalchemy_engine_json.exists() is False:
-        orm, host, username, password = get_orm()
-        cache_data = {
-            "host": host,
-            "username": username,
-            "password": password,
-            "update_time": datetime.now().isoformat(),
-        }
-        path_sqlalchemy_engine_json.write_text(json.dumps(cache_data))
-        return orm
-
-    # cache exists, and is not expired
-    cache_data = json.loads(path_sqlalchemy_engine_json.read_text())
-    update_time = datetime.fromisoformat(cache_data["update_time"])
-
-    if (datetime.now() - update_time).total_seconds() <= 3600:
-        engine = create_engine(
-            host=cache_data["host"],
-            port=3306,
-            username=cache_data["username"],
-            password=cache_data["password"],
-            db_name="acore_auth",
-        )
-        orm = Orm(engine=engine)
-        return orm
-
-    # cache is expired
-    orm, host, username, password = get_orm()
-    cache_data = {
-        "host": host,
-        "username": username,
-        "password": password,
-        "update_time": datetime.now().isoformat(),
-    }
-    path_sqlalchemy_engine_json.write_text(json.dumps(cache_data))
-    return orm
+    db_info = get_db_info()
+    engine = create_engine(
+        host=db_info["db_host"],
+        port=3306,
+        username=db_info["db_username"],
+        password=db_info["db_password"],
+        db_name="acore_auth",
+    )
+    return Orm(engine=engine)
 
 
 def get_latest_n_quest(

@@ -32,3 +32,6 @@ path_metadata_world_cache = dir_project_root.joinpath("metadata_world.pickle")
 
 # a local cache of sqlalchemy engine connection info
 path_sqlalchemy_engine_json = dir_project_root.joinpath("sqlalchemy_engine.json")
+
+# diskcache.Cache location
+dir_disk_cache = dir_project_root / ".disk-cache"
