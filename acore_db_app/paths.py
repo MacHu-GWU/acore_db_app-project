@@ -35,3 +35,8 @@ path_sqlalchemy_engine_json = dir_project_root.joinpath("sqlalchemy_engine.json"
 
 # diskcache.Cache location
 dir_disk_cache = dir_project_root / ".disk-cache"
+
+# ------------------------------------------------------------------------------
+# GUI Related
+# ------------------------------------------------------------------------------
+path_gui_settings_json = dir_project_root / "gui_settings.json"
