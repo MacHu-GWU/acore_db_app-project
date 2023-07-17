@@ -13,7 +13,7 @@ def get_latest_n_quest(
     locale: str,
     n: int = 3,
 ):
-    filtered_enriched_quest_data_list = app.get_latest_n_quest_enriched_quest_data(
+    filtered_enriched_quest_data_list = app.quest.get_latest_n_quest_enriched_quest_data(
         orm=get_orm_from_ec2_inside(),
         character=character,
         locale=app.LocaleEnum[locale],

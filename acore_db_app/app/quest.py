@@ -16,9 +16,9 @@ from ..logger import logger
 from .locale import LocaleEnum
 
 
-def normalize_character(name: str) -> str:
+def _normalize_character(name: str) -> str:
     """
-    将角色名称标准化为数据库中的值. 第一个字母大写, 后面的字母小写
+    将角色名称标准化为数据库中的值. 第一个字母大写, 后面的字母小写.
     """
     return name[0].upper() + name[1:].lower()
 
@@ -58,7 +58,9 @@ def list_quest_by_character(
     orm: Orm,
     character: str,
 ) -> T.List[CharacterQuestStatus]:
-    """ """
+    """
+    列出指定角色的所有任务的状态信息. 按照接任务的事件排序, 最新的任务在最前面.
+    """
     with orm.engine.connect() as connect:
         stmt = (
             sa.select(
@@ -71,7 +73,7 @@ def list_quest_by_character(
                     orm.t_character_queststatus.c.guid == orm.t_characters.c.guid,
                 )
             )
-            .where(orm.t_characters.c.name == normalize_character(character))
+            .where(orm.t_characters.c.name == _normalize_character(character))
             .order_by(orm.t_character_queststatus.c.timer.desc())
         )
         return [CharacterQuestStatus(**row) for row in connect.execute(stmt).mappings()]
@@ -79,6 +81,11 @@ def list_quest_by_character(
 
 @dataclasses.dataclass
 class EnrichedQuestData:
+    """
+    代表着一个魔兽世界任务的数据. 并将额外的相关信息也整合到了一起. 该 data model 不包含与
+    玩家相关的信息, 例如任务状态, 任务是否完成等等. 它是一个完全无状态的数据.
+    """
+
     quest_id: T.Optional[int] = dataclasses.field(default=None)
     quest_title_enUS: T.Optional[str] = dataclasses.field(default=None)
     quest_title_locale: T.Optional[str] = dataclasses.field(default=None)
@@ -94,6 +101,13 @@ class EnrichedQuestData:
     ender_position_y: T.Optional[float] = dataclasses.field(default=None)
     ender_position_z: T.Optional[float] = dataclasses.field(default=None)
     ender_map: T.Optional[int] = dataclasses.field(default=None)
+
+    @property
+    def quest_title(self) -> str:
+        if self.quest_title_locale is None:
+            return self.quest_title_enUS
+        else:
+            return self.quest_title_locale
 
     @logger.pretty_log()
     def get_gm_commands(self):
@@ -121,19 +135,30 @@ class EnrichedQuestData:
 def get_enriched_quest_data(
     orm: Orm,
     character: str,
-    locale: LocaleEnum,
+    locale: LocaleEnum = LocaleEnum.enUS,
     quest_title: T.Optional[str] = None,
     quest_objective: T.Optional[str] = None,
     quest_detail: T.Optional[str] = None,
     limit: int = 25,
 ) -> T.List[EnrichedQuestData]:
-    """ """
+    """
+    给定数据库连接, 和一个魔兽世界游戏角色的名字. 根据这些信息对获得该玩家所有的任务的详细信息,
+    并将跟任务相关的其他数据都整合到一起.
+
+    :param orm:
+    :param character: 魔兽世界角色名字
+    :param locale: 本地化语言, 默认为英文
+    :param quest_title: 可选参数, 根据任务标题对任务进行过滤
+    :param quest_objective: 可选参数, 根据任务目标对任务进行过滤
+    :param quest_detail: 可选参数, 根据任务详情对任务进行过滤
+    :param limit: 返回的任务数量的最大限制
+    """
     with orm.engine.connect() as connect:
         selects = list()
         selects.append(orm.t_character_queststatus.c.quest.label("quest_id"))
 
         wheres = list()
-        wheres.append(orm.t_characters.c.name == normalize_character(character))
+        wheres.append(orm.t_characters.c.name == _normalize_character(character))
 
         joins = orm.t_characters.join(
             # 获得只属于该角色的任务状态
@@ -141,29 +166,15 @@ def get_enriched_quest_data(
             orm.t_character_queststatus.c.guid == orm.t_characters.c.guid,
         )
 
-        # if locale is LocaleEnum.enUS:
-        #     selects.append(orm.t_quest_template.c.LogTitle.label("quest_title"))
-        #     joins = joins.join(
-        #         # 获得任务的文本信息
-        #         orm.t_quest_template,
-        #         orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
-        #     )
-        # else:
-        #     selects.append(orm.t_quest_template_locale.c.Title.label("quest_title"))
-        #     joins = joins.join(
-        #         # 获得任务的文本信息
-        #         orm.t_quest_template_locale,
-        #         orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
-        #     )
-        #     wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
-
+        # 获得任务的英文文本信息
         selects.append(orm.t_quest_template.c.LogTitle.label("quest_title_enUS"))
         joins = joins.join(
-            # 获得任务的文本信息
             orm.t_quest_template,
             orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
         )
 
+        # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
+        # the main table has to be on the left
         if locale is not LocaleEnum.enUS:
             selects.append(
                 orm.t_quest_template_locale.c.Title.label("quest_title_locale")
@@ -246,7 +257,6 @@ def get_enriched_quest_data(
                 )
 
         stmt = sa.select(*selects).select_from(joins).where(*wheres).limit(limit)
-        # return [EnrichedQuestData(**row) for row in connect.execute(stmt).mappings()]
         enriched_quest_data_list = list()
         for row in connect.execute(stmt).mappings():
             # print(row)
@@ -255,54 +265,48 @@ def get_enriched_quest_data(
         return enriched_quest_data_list
 
 
-@logger.pretty_log()
-def print_complete_latest_n_quest_gm_commands(
-    character: str,
-    n: int,
-    filtered_enriched_quest_data_list: T.List[EnrichedQuestData],
-):
-    logger.info(f"打印完成 {character!r} 的最新的 {n} 个任务的 GM 命令:")
-    for enriched_quest_data in filtered_enriched_quest_data_list:
-        with logger.nested():
-            enriched_quest_data.get_gm_commands()
-
-
 def get_latest_n_quest_enriched_quest_data(
     orm: Orm,
     character: str,
     locale: LocaleEnum,
     n: int = 3,
 ) -> T.List[EnrichedQuestData]:
-    # character_quest_status_list = list_quest_by_character(
-    #     orm=orm,
-    #     character=character,
-    # )
-    # filtered_quest_id_list = [
-    #     character_quest_status.quest
-    #     for character_quest_status in character_quest_status_list
-    #     if character_quest_status.is_incomplete() or character_quest_status.is_failed()
-    # ][:n]
-    # filtered_quest_id_set = set(filtered_quest_id_list)
-    # enriched_quest_data_list = get_enriched_quest_data(
-    #     orm=orm,
-    #     character=character,
-    #     locale=locale,
-    #     limit=100,
-    # )
-    # filtered_enriched_quest_data_list = [
-    #     enriched_quest_data
-    #     for enriched_quest_data in enriched_quest_data_list
-    #     if enriched_quest_data.quest_id in filtered_quest_id_set
-    # ]
-    # return filtered_enriched_quest_data_list
-
+    """
+    给定数据库连接, 和一个魔兽世界游戏角色的名字. 根据这些信息对获得该玩家所有的任务的详细信息,
+    并将跟任务相关的其他数据都整合到一起. 最终按照接任务的事件顺序返回最新的 n 个任务的详细信息.
+    """
+    character_quest_status_list = list_quest_by_character(
+        orm=orm,
+        character=character,
+    )
     enriched_quest_data_list = get_enriched_quest_data(
         orm=orm,
         character=character,
         locale=locale,
-        limit=100,
     )
-    return enriched_quest_data_list
+    enriched_quest_data_mapper = {
+        enriched_quest_data.quest_id: enriched_quest_data
+        for enriched_quest_data in enriched_quest_data_list
+    }
+    ordered_enriched_quest_data_list = [
+        enriched_quest_data_mapper[character_quest_status.quest]
+        for character_quest_status in character_quest_status_list
+        if character_quest_status.quest in enriched_quest_data_mapper
+    ]
+    ordered_enriched_quest_data_list = ordered_enriched_quest_data_list[:n]
+    return ordered_enriched_quest_data_list
+
+
+@logger.pretty_log()
+def _print_complete_latest_n_quest_gm_commands(
+    character: str,
+    n: int,
+    enriched_quest_data_list: T.List[EnrichedQuestData],
+):
+    logger.info(f"打印完成 {character!r} 的最新的 {n} 个任务的 GM 命令:")
+    for enriched_quest_data in enriched_quest_data_list:
+        with logger.nested():
+            enriched_quest_data.get_gm_commands()
 
 
 def complete_latest_n_quest(
@@ -311,14 +315,18 @@ def complete_latest_n_quest(
     locale: LocaleEnum,
     n: int = 3,
 ):
-    filtered_enriched_quest_data_list = get_latest_n_quest_enriched_quest_data(
+    """
+    给定数据库连接, 和一个魔兽世界游戏角色的名字. 打印完成该玩家最新的 n 个任务的 GM 命令.
+    其中包含完成任务的命令, 传送到接任务, 交任务的 NPC 处的命令.
+    """
+    ordered_enriched_quest_data_list = get_latest_n_quest_enriched_quest_data(
         orm=orm,
         character=character,
         locale=locale,
         n=n,
     )
-    print_complete_latest_n_quest_gm_commands(
+    _print_complete_latest_n_quest_gm_commands(
         character=character,
         n=n,
-        filtered_enriched_quest_data_list=filtered_enriched_quest_data_list,
+        enriched_quest_data_list=ordered_enriched_quest_data_list,
     )
