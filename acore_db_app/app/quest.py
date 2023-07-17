@@ -140,15 +140,31 @@ def get_enriched_quest_data(
             orm.t_character_queststatus.c.guid == orm.t_characters.c.guid,
         )
 
-        if locale is LocaleEnum.enUS:
-            selects.append(orm.t_quest_template.c.LogTitle.label("quest_title"))
-            joins = joins.join(
-                # 获得任务的文本信息
-                orm.t_quest_template,
-                orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
-            )
-        else:
-            selects.append(orm.t_quest_template_locale.c.Title.label("quest_title"))
+        # if locale is LocaleEnum.enUS:
+        #     selects.append(orm.t_quest_template.c.LogTitle.label("quest_title"))
+        #     joins = joins.join(
+        #         # 获得任务的文本信息
+        #         orm.t_quest_template,
+        #         orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
+        #     )
+        # else:
+        #     selects.append(orm.t_quest_template_locale.c.Title.label("quest_title"))
+        #     joins = joins.join(
+        #         # 获得任务的文本信息
+        #         orm.t_quest_template_locale,
+        #         orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
+        #     )
+        #     wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
+
+        selects.append(orm.t_quest_template.c.LogTitle.label("quest_title_enUS"))
+        joins = joins.join(
+            # 获得任务的文本信息
+            orm.t_quest_template,
+            orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
+        )
+
+        if locale is not LocaleEnum.enUS:
+            selects.append(orm.t_quest_template_locale.c.Title.label("quest_title_locale"))
             joins = joins.join(
                 # 获得任务的文本信息
                 orm.t_quest_template_locale,
