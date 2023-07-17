@@ -5,6 +5,7 @@ metadata.pickle
 metadata_auth.pickle
 metadata_char.pickle
 metadata_world.pickle
+.disk-cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
