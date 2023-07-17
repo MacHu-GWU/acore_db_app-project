@@ -248,6 +248,7 @@ def get_latest_n_quest_enriched_quest_data(
     locale: LocaleEnum,
     n: int = 3,
 ) -> T.List[EnrichedQuestData]:
+    print(character, locale, n)
     character_quest_status_list = list_quest_by_character(
         orm=orm,
         character=character,
