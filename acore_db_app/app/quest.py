@@ -243,8 +243,12 @@ def get_enriched_quest_data(
                 )
 
         stmt = sa.select(*selects).select_from(joins).where(*wheres).limit(limit)
-        return [EnrichedQuestData(**row) for row in connect.execute(stmt).mappings()]
-
+        # return [EnrichedQuestData(**row) for row in connect.execute(stmt).mappings()]
+        enriched_quest_data_list = list()
+        for row in connect.execute(stmt).mappings():
+            print(row)
+        # enriched_quest_data_list.append()
+        return enriched_quest_data_list
 
 @logger.pretty_log()
 def print_complete_latest_n_quest_gm_commands(
