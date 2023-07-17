@@ -248,29 +248,36 @@ def get_latest_n_quest_enriched_quest_data(
     locale: LocaleEnum,
     n: int = 3,
 ) -> T.List[EnrichedQuestData]:
-    print(character, locale, n)
-    character_quest_status_list = list_quest_by_character(
-        orm=orm,
-        character=character,
-    )
-    filtered_quest_id_list = [
-        character_quest_status.quest
-        for character_quest_status in character_quest_status_list
-        if character_quest_status.is_incomplete() or character_quest_status.is_failed()
-    ][:n]
-    filtered_quest_id_set = set(filtered_quest_id_list)
+    # character_quest_status_list = list_quest_by_character(
+    #     orm=orm,
+    #     character=character,
+    # )
+    # filtered_quest_id_list = [
+    #     character_quest_status.quest
+    #     for character_quest_status in character_quest_status_list
+    #     if character_quest_status.is_incomplete() or character_quest_status.is_failed()
+    # ][:n]
+    # filtered_quest_id_set = set(filtered_quest_id_list)
+    # enriched_quest_data_list = get_enriched_quest_data(
+    #     orm=orm,
+    #     character=character,
+    #     locale=locale,
+    #     limit=100,
+    # )
+    # filtered_enriched_quest_data_list = [
+    #     enriched_quest_data
+    #     for enriched_quest_data in enriched_quest_data_list
+    #     if enriched_quest_data.quest_id in filtered_quest_id_set
+    # ]
+    # return filtered_enriched_quest_data_list
+
     enriched_quest_data_list = get_enriched_quest_data(
         orm=orm,
         character=character,
         locale=locale,
         limit=100,
     )
-    filtered_enriched_quest_data_list = [
-        enriched_quest_data
-        for enriched_quest_data in enriched_quest_data_list
-        if enriched_quest_data.quest_id in filtered_quest_id_set
-    ]
-    return filtered_enriched_quest_data_list
+    return enriched_quest_data_list
 
 
 def complete_latest_n_quest(
