@@ -3,7 +3,7 @@
 from PySide6 import QtCore, QtWidgets, QtGui
 
 from .quest_completer.main import QuestCompleterWidget
-# from .settings import SettingsWidget
+from .settings.main import SettingsWidget
 
 
 class TabDialog(QtWidgets.QDialog):
@@ -23,7 +23,7 @@ class TabDialog(QtWidgets.QDialog):
 
         # 一共有两个 Tab, 一个用于搜索, 一个用于设置
         self.tab_widget.addTab(QuestCompleterWidget(self), "Quest Completer")
-        # self.tab_widget.addTab(SettingsWidget(self), "Settings")
+        self.tab_widget.addTab(SettingsWidget(self), "Settings")
 
         # 这个 Widget 只有一个 Layout, 用于放置 Tab
         main_layout = QtWidgets.QVBoxLayout()

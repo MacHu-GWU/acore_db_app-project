@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import typing as T
-import json
+
 from PySide6 import QtCore, QtWidgets, QtGui
 
-from ....remote_cli.impl import get_latest_n_request
+from ....remote_cli.impl import EnrichedQuestData, get_latest_n_request
+from ..settings.json_setting import setting_object
+
 
 if T.TYPE_CHECKING:
     from .main import QuestCompleterWidget
 
 
 from boto_session_manager import BotoSesManager
+
 bsm = BotoSesManager(profile_name="bmt_app_dev_us_east_1")
+
 
 class QuestCompleterWidgetQueryForm:
     def add_query_form(self):
@@ -32,17 +36,21 @@ class QuestCompleterWidgetQueryForm:
 
     def _search_button_clicked_event_handler(self: "QuestCompleterWidget"):
         print("search button clicked")
+        instance_id = setting_object.server.metadata.ec2_inst.id
+        character = self.query_form_character_value.text()
+        locale = setting_object.locale
+        print(f"search quests for: character = {character!r}, locale = {locale!r} on server_id = {setting_object.server.id!r}")
         enriched_quest_data_list = get_latest_n_request(
-            bsm=bsm,
-            server_id="sbx-green",
-            character="shootingrab",
-            locale="zhTW",
+            bsm=setting_object.bsm,
+            instance_id=instance_id,
+            character=character,
+            locale=locale,
             n=25,
         )
 
         self.quest_selection_item_list.clear()
         for enriched_quest_data in enriched_quest_data_list:
-            item = QtWidgets.QListWidgetItem(f"{enriched_quest_data}")
+            item = QtWidgets.QListWidgetItem(f"{enriched_quest_data.quest_id} {enriched_quest_data.quest_title}")
             item.enriched_quest_data = enriched_quest_data
             item.setTextAlignment(QtCore.Qt.AlignLeft)
             self.quest_selection_item_list.addItem(item)

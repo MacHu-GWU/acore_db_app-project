@@ -2,9 +2,9 @@
 
 import typing as T
 import json
+
 from boto_session_manager import BotoSesManager
 from acore_paths.api import path_acore_db_app_cli
-from acore_server_metadata.api import Server as ServerMetadata
 import aws_ssm_run_command.api as aws_ssm_run_command
 
 from ..app.quest import EnrichedQuestData
@@ -12,14 +12,14 @@ from ..app.quest import EnrichedQuestData
 
 def get_latest_n_request(
     bsm: BotoSesManager,
-    server_id: str,
+    instance_id: str,
     character: str,
     locale: str,
     n: int,
 ) -> T.List[EnrichedQuestData]:
     command_invocation = aws_ssm_run_command.better_boto.send_command_sync(
         ssm_client=bsm.ssm_client,
-        instance_id=ServerMetadata.get_ec2(ec2_client=bsm.ec2_client, id=server_id).id,
+        instance_id=instance_id,
         commands=[
             (
                 f"{path_acore_db_app_cli} "
