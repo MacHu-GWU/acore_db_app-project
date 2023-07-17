@@ -80,7 +80,8 @@ def list_quest_by_character(
 @dataclasses.dataclass
 class EnrichedQuestData:
     quest_id: T.Optional[int] = dataclasses.field(default=None)
-    quest_title: T.Optional[str] = dataclasses.field(default=None)
+    quest_title_enUS: T.Optional[str] = dataclasses.field(default=None)
+    quest_title_locale: T.Optional[str] = dataclasses.field(default=None)
     starter_creature_id: T.Optional[int] = dataclasses.field(default=None)
     starter_guid: T.Optional[int] = dataclasses.field(default=None)
     starter_position_x: T.Optional[float] = dataclasses.field(default=None)
@@ -164,7 +165,9 @@ def get_enriched_quest_data(
         )
 
         if locale is not LocaleEnum.enUS:
-            selects.append(orm.t_quest_template_locale.c.Title.label("quest_title_locale"))
+            selects.append(
+                orm.t_quest_template_locale.c.Title.label("quest_title_locale")
+            )
             joins = joins.join(
                 # 获得任务的文本信息
                 orm.t_quest_template_locale,
@@ -246,9 +249,11 @@ def get_enriched_quest_data(
         # return [EnrichedQuestData(**row) for row in connect.execute(stmt).mappings()]
         enriched_quest_data_list = list()
         for row in connect.execute(stmt).mappings():
-            print(row)
-        # enriched_quest_data_list.append()
+            # print(row)
+            enriched_quest_data = EnrichedQuestData(**row)
+            enriched_quest_data_list.append(enriched_quest_data)
         return enriched_quest_data_list
+
 
 @logger.pretty_log()
 def print_complete_latest_n_quest_gm_commands(
