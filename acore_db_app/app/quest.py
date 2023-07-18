@@ -175,6 +175,27 @@ def get_enriched_quest_data(
             orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
         )
 
+        # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
+        # the main table has to be on the left
+        if locale is not LocaleEnum.enUS:
+            subquery = sa.select(
+                orm.t_quest_template_locale.c.ID,
+                orm.t_quest_template_locale.c.Title,
+            ).where(
+                orm.t_quest_template_locale.c.locale == locale.value,
+            ).subquery()
+
+            selects.extend([
+                subquery.c.Title.label("quest_title_locale"),
+            ])
+
+            joins = joins.join(
+                # 获得任务的文本信息
+                subquery,
+                subquery.c.ID == orm.t_character_queststatus.c.quest,
+                isouter=True,
+            )
+
         t_creature_quest_starter_entry = orm.t_creature.alias()
         t_creature_quest_ender_entry = orm.t_creature.alias()
 
@@ -221,39 +242,6 @@ def get_enriched_quest_data(
             )
         )
 
-        # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
-        # the main table has to be on the left
-        if locale is not LocaleEnum.enUS:
-            # joins = joins.join(
-            #     # 获得任务的文本信息
-            #     orm.t_quest_template_locale,
-            #     orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
-            #     isouter=True,
-            # )
-            # wheres.append(
-            #     sa.or_(
-            #         orm.t_quest_template_locale.c.locale == None,
-            #         orm.t_quest_template_locale.c.locale == locale.value,
-            #     )
-            # )
-
-            subquery = sa.select(
-                orm.t_quest_template_locale.c.ID,
-                orm.t_quest_template_locale.c.Title,
-            ).where(
-                orm.t_quest_template_locale.c.locale == locale.value,
-            ).subquery()
-
-            selects.extend([
-                subquery.c.Title.label("quest_title_locale"),
-            ])
-
-            joins = joins.join(
-                # 获得任务的文本信息
-                subquery,
-                subquery.c.ID == orm.t_character_queststatus.c.quest,
-                isouter=True,
-            )
 
         if quest_title is not None:
             if locale is LocaleEnum.enUS:
