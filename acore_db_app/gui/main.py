@@ -18,7 +18,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, widget: QtWidgets.QWidget):
         QtWidgets.QMainWindow.__init__(self)
-        self.setWindowTitle("Video Manager")
+        self.setWindowTitle("Acore Database App")
         self.add_menu()
         self.setCentralWidget(widget)
 

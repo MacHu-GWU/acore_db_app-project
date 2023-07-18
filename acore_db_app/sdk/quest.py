@@ -7,7 +7,7 @@ from boto_session_manager import BotoSesManager
 from acore_paths.api import path_acore_db_app_cli
 import aws_ssm_run_command.api as aws_ssm_run_command
 
-from ..app.quest import EnrichedQuestData
+from ..app.api import quest
 
 
 def get_latest_n_request(
@@ -16,7 +16,7 @@ def get_latest_n_request(
     character: str,
     locale: str,
     n: int,
-) -> T.List[EnrichedQuestData]:
+) -> T.List[quest.EnrichedQuestData]:
     command_invocation = aws_ssm_run_command.better_boto.send_command_sync(
         ssm_client=bsm.ssm_client,
         instance_id=instance_id,
@@ -30,7 +30,7 @@ def get_latest_n_request(
         timeout=10,
     )
     enriched_quest_data_list = [
-        EnrichedQuestData(**dct)
+        quest.EnrichedQuestData(**dct)
         for dct in json.loads(command_invocation.StandardOutputContent)
     ]
     return enriched_quest_data_list

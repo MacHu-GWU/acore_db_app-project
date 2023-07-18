@@ -1,0 +1,96 @@
+<mxfile host="Electron" modified="2023-07-18T00:56:37.654Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="U-S8lRzBZKtkl1BMwEKR" version="21.2.8" type="device" pages="2">
+  <diagram name="Quest Completer" id="mpdiWM3FPVz6ptvhwHt7">
+    <mxGraphModel dx="1172" dy="864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-1" value="badge" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1010" width="360" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-12" value="" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#CED4DA;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#7D868C;align=left;spacing=15;spacingLeft=40;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-13" value="Character" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.leftButton;strokeColor=inherit;gradientColor=inherit;fontColor=inherit;fillColor=#E9ECEF;rSize=5;perimeter=none;whiteSpace=wrap;resizeHeight=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-22" value="&amp;nbsp; Quest 1 title" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-23" value="Quest" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fillColor=#E9ECEF;strokeColor=inherit;fontColor=inherit;shadow=0;dashed=0;gradientColor=inherit;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-32" value="Search Quest" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fillColor=#E9ECEF;strokeColor=inherit;fontColor=inherit;shadow=0;dashed=0;gradientColor=inherit;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-34" value="Search" style="labelPosition=center;verticalLabelPosition=middle;align=center;html=1;shape=mxgraph.basic.shaded_button;dx=10;fillColor=#E6E6E6;strokeColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-35" value="Clear" style="labelPosition=center;verticalLabelPosition=middle;align=center;html=1;shape=mxgraph.basic.shaded_button;dx=10;fillColor=#E6E6E6;strokeColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="440" y="200" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="440" as="sourcePoint" />
+            <mxPoint x="60" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-37" value="&amp;nbsp; Quest 2 title" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-39" value="&amp;nbsp; Quest 3 title" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-40" value="&amp;nbsp; double click to copy QUEST COMPLETE command: .quest complete 12345" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-41" value="Action" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fillColor=#E9ECEF;strokeColor=inherit;fontColor=inherit;shadow=0;dashed=0;gradientColor=inherit;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="640" as="sourcePoint" />
+            <mxPoint x="60" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-43" value="&amp;nbsp; double click to copy TELEPORT TO QUEST STARTER command: .go xyz 123 456 789 10" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0N-8eQY93uIyo1IM2wPp-44" value="&amp;nbsp; double click to copy TELEPORT TO QUEST ENDER command: .go xyz 123 456 789 10" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="600" width="760" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="1G0hi-2lY_XPb7gJYxSs" name="Settings">
+    <mxGraphModel dx="1172" dy="864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-14" value="sbx-blue" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#CED4DA;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#7D868C;align=left;spacing=15;spacingLeft=40;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="160" y="200" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-16" value="your_aws_profile&amp;nbsp;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#CED4DA;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#7D868C;align=left;spacing=15;spacingLeft=40;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="160" y="160" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-2" value="aws_profile" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.leftButton;strokeColor=inherit;gradientColor=inherit;fontColor=inherit;fillColor=#E9ECEF;rSize=5;perimeter=none;whiteSpace=wrap;resizeHeight=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-4" value="Apply" style="labelPosition=center;verticalLabelPosition=middle;align=center;html=1;shape=mxgraph.basic.shaded_button;dx=10;fillColor=#E6E6E6;strokeColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="440" y="400" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-5" value="Load" style="labelPosition=center;verticalLabelPosition=middle;align=center;html=1;shape=mxgraph.basic.shaded_button;dx=10;fillColor=#E6E6E6;strokeColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-11" value="server_id" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.leftButton;strokeColor=inherit;gradientColor=inherit;fontColor=inherit;fillColor=#E9ECEF;rSize=5;perimeter=none;whiteSpace=wrap;resizeHeight=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-12" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;zhTW&lt;/span&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#CED4DA;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#7D868C;align=left;spacing=15;spacingLeft=40;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="160" y="240" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YVjmOfpygNd_FIvT-FHI-13" value="locale" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.leftButton;strokeColor=inherit;gradientColor=inherit;fontColor=inherit;fillColor=#E9ECEF;rSize=5;perimeter=none;whiteSpace=wrap;resizeHeight=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

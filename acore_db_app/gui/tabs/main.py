@@ -8,11 +8,10 @@ from .settings.main import SettingsWidget
 
 class TabDialog(QtWidgets.QDialog):
     """
-    这是我们的 App 的主要的 Widget, 它包含了三个 Tab.
+    这是我们的 App 的主要的 Widget, 它包含了几个 Tab.
 
-    1. Search Tab, 主要负责视频文件的搜索
-    2. Manager Tab, 主要负责视频文件的管理
-    3. Settings Tab, 主要负责 App 的设置
+    1. Quest Completer Tab, 用于搜索任务, 并且完成任务
+    2. Settings Tab, 主要 GUI 的配置管理
 
     每个 Tab 本身是一个子 Widget.
     """

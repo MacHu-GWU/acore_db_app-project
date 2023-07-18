@@ -288,6 +288,7 @@ def get_latest_n_quest_enriched_quest_data(
         enriched_quest_data.quest_id: enriched_quest_data
         for enriched_quest_data in enriched_quest_data_list
     }
+    print(enriched_quest_data_mapper)
     ordered_enriched_quest_data_list = [
         enriched_quest_data_mapper[character_quest_status.quest]
         for character_quest_status in character_quest_status_list

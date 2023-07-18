@@ -4,7 +4,7 @@ import typing as T
 
 from PySide6 import QtCore, QtWidgets, QtGui
 
-from ....remote_cli.impl import EnrichedQuestData
+from ....sdk.api import quest
 
 if T.TYPE_CHECKING:
     from .main import QuestCompleterWidget
@@ -27,12 +27,6 @@ class QuestCompleterWidgetQuestSelection:
         self.quest_selection_item_list.itemSelectionChanged.connect(
             self._quest_selection_item_selection_changed_event_handler
         )
-        # self.item_selection_item_list.clear()
-        # for i in range(1, 1 + 20):
-        #     item = QtWidgets.QListWidgetItem(f"Item {i}")
-        #     item.user_data = {"id": i}
-        #     item.setTextAlignment(QtCore.Qt.AlignLeft)
-        #     self.item_selection_item_list.addItem(item)
 
     def _quest_selection_item_selection_changed_event_handler(self: "QuestCompleterWidget"):
         """
@@ -45,7 +39,7 @@ class QuestCompleterWidgetQuestSelection:
 
         self.quest_action_item_list.clear()
 
-        enriched_quest_data: EnrichedQuestData = item.enriched_quest_data
+        enriched_quest_data: quest.EnrichedQuestData = item.enriched_quest_data
 
         copy_text = f".quest complete {enriched_quest_data.quest_id}"
         item = QtWidgets.QListWidgetItem(f"double click to copy COMPLETE QUEST command: {copy_text}")

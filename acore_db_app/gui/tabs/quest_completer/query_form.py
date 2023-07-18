@@ -4,7 +4,7 @@ import typing as T
 
 from PySide6 import QtCore, QtWidgets, QtGui
 
-from ....remote_cli.impl import EnrichedQuestData, get_latest_n_request
+from ....sdk.api import quest
 from ..settings.json_setting import setting_object
 
 
@@ -24,6 +24,7 @@ class QuestCompleterWidgetQueryForm:
 
     def _add_query_form_widgets(self):
         self.query_form_header = QtWidgets.QLabel("Search Quest")
+        self.query_form_header.setAlignment(QtCore.Qt.AlignCenter)
 
         self.query_form_character_label = QtWidgets.QLabel("Character")
         self.query_form_character_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -40,7 +41,7 @@ class QuestCompleterWidgetQueryForm:
         character = self.query_form_character_value.text()
         locale = setting_object.locale
         print(f"search quests for: character = {character!r}, locale = {locale!r} on server_id = {setting_object.server.id!r}")
-        enriched_quest_data_list = get_latest_n_request(
+        enriched_quest_data_list = quest.get_latest_n_request(
             bsm=setting_object.bsm,
             instance_id=instance_id,
             character=character,
