@@ -279,10 +279,10 @@ def get_enriched_quest_data(
                 )
 
         stmt = sa.select(*selects).select_from(joins).where(*wheres).limit(limit)
-        print(stmt)
+        # print(stmt)
         enriched_quest_data_list = list()
         for row in connect.execute(stmt).mappings():
-            rprint(row)
+            # rprint(row)
             enriched_quest_data = EnrichedQuestData(**row)
             enriched_quest_data_list.append(enriched_quest_data)
         return enriched_quest_data_list
