@@ -9,6 +9,7 @@ import enum
 import dataclasses
 
 import sqlalchemy as sa
+from rich import print as rprint
 
 from ..orm import Orm
 from ..logger import logger
@@ -266,7 +267,7 @@ def get_enriched_quest_data(
         print(stmt)
         enriched_quest_data_list = list()
         for row in connect.execute(stmt).mappings():
-            # print(row)
+            rprint(row)
             enriched_quest_data = EnrichedQuestData(**row)
             enriched_quest_data_list.append(enriched_quest_data)
         return enriched_quest_data_list
