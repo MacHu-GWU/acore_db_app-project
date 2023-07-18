@@ -224,10 +224,6 @@ def get_enriched_quest_data(
         # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
         # the main table has to be on the left
         if locale is not LocaleEnum.enUS:
-            # selects.extend([
-            #     orm.t_quest_template_locale.c.Title.label("quest_title_locale"),
-            #     orm.t_quest_template_locale.c.locale,
-            # ])
             # joins = joins.join(
             #     # 获得任务的文本信息
             #     orm.t_quest_template_locale,
@@ -247,6 +243,11 @@ def get_enriched_quest_data(
             ).where(
                 orm.t_quest_template_locale.c.locale == locale.value,
             ).subquery()
+
+            selects.extend([
+                subquery.c.Title.label("quest_title_locale"),
+            ])
+
             joins = joins.join(
                 # 获得任务的文本信息
                 subquery,
