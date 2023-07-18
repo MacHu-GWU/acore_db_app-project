@@ -90,6 +90,7 @@ class EnrichedQuestData:
     quest_id: T.Optional[int] = dataclasses.field(default=None)
     quest_title_enUS: T.Optional[str] = dataclasses.field(default=None)
     quest_title_locale: T.Optional[str] = dataclasses.field(default=None)
+    locale: T.Optional[str] = dataclasses.field(default=None)
     starter_creature_id: T.Optional[int] = dataclasses.field(default=None)
     starter_guid: T.Optional[int] = dataclasses.field(default=None)
     starter_position_x: T.Optional[float] = dataclasses.field(default=None)
@@ -223,20 +224,34 @@ def get_enriched_quest_data(
         # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
         # the main table has to be on the left
         if locale is not LocaleEnum.enUS:
-            selects.append(
-                orm.t_quest_template_locale.c.Title.label("quest_title_locale")
-            )
+            selects.extend([
+                orm.t_quest_template_locale.c.Title.label("quest_title_locale"),
+                orm.t_quest_template_locale.c.locale.label("locale"),
+            ])
             joins = joins.join(
                 # 获得任务的文本信息
                 orm.t_quest_template_locale,
                 orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
                 isouter=True,
             )
-            # wheres.append(
-            #     sa.or_(
-            #         orm.t_quest_template_locale.c.locale == None,
-            #         orm.t_quest_template_locale.c.locale == locale.value,
-            #     )
+            wheres.append(
+                sa.or_(
+                    orm.t_quest_template_locale.c.locale == None,
+                    orm.t_quest_template_locale.c.locale == locale.value,
+                )
+            )
+
+            # subquery = sa.select(
+            #     orm.t_quest_template_locale.c.ID,
+            #     orm.t_quest_template_locale.c.Title,
+            # ).where(
+            #     orm.t_quest_template_locale.c.locale == locale.value,
+            # )
+            # joins = joins.join(
+            #     # 获得任务的文本信息
+            #     subquery,
+            #     orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
+            #     isouter=True,
             # )
 
         if quest_title is not None:
