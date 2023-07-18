@@ -231,12 +231,12 @@ def get_enriched_quest_data(
                 orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
                 isouter=True,
             )
-            wheres.append(
-                sa.or_(
-                    orm.t_quest_template_locale.c.locale == None,
-                    orm.t_quest_template_locale.c.locale == locale.value,
-                )
-            )
+            # wheres.append(
+            #     sa.or_(
+            #         orm.t_quest_template_locale.c.locale == None,
+            #         orm.t_quest_template_locale.c.locale == locale.value,
+            #     )
+            # )
 
         if quest_title is not None:
             if locale is LocaleEnum.enUS:
