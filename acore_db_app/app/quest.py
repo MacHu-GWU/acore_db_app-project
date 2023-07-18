@@ -173,21 +173,6 @@ def get_enriched_quest_data(
             orm.t_quest_template.c.ID == orm.t_character_queststatus.c.quest,
         )
 
-        # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
-        # the main table has to be on the left
-        if locale is not LocaleEnum.enUS:
-            selects.append(
-                orm.t_quest_template_locale.c.Title.label("quest_title_locale")
-            )
-            joins = joins.join(
-                # 获得任务的文本信息
-                orm.t_quest_template_locale,
-                orm.t_character_queststatus.c.quest == orm.t_quest_template_locale.c.ID,
-                # isouter=True,
-                full=True,
-            )
-            wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
-
         t_creature_quest_starter_entry = orm.t_creature.alias()
         t_creature_quest_ender_entry = orm.t_creature.alias()
 
@@ -233,6 +218,20 @@ def get_enriched_quest_data(
                 t_creature_quest_ender_entry.c.id1 == orm.t_creature_queststarter.c.id,
             )
         )
+
+        # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
+        # the main table has to be on the left
+        if locale is not LocaleEnum.enUS:
+            selects.append(
+                orm.t_quest_template_locale.c.Title.label("quest_title_locale")
+            )
+            joins = joins.join(
+                # 获得任务的文本信息
+                orm.t_quest_template_locale,
+                orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
+                isouter=True,
+            )
+            wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
 
         if quest_title is not None:
             if locale is LocaleEnum.enUS:
