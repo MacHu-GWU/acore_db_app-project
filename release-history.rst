@@ -25,10 +25,7 @@ x.y.z (Backlog)
 **Minor Improvements**
 
 - refactor the ORM cache mechanism using diskcache
-
-**Bugfixes**
-
-**Miscellaneous**
+- more docs
 
 
 0.1.1 (2023-06-28)
