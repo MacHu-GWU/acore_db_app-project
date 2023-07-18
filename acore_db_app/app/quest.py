@@ -179,10 +179,11 @@ def get_enriched_quest_data(
             selects.append(
                 orm.t_quest_template_locale.c.Title.label("quest_title_locale")
             )
-            joins = joins.left(
+            joins = joins.join(
                 # 获得任务的文本信息
                 orm.t_quest_template_locale,
                 orm.t_quest_template_locale.c.ID == orm.t_character_queststatus.c.quest,
+                isouter=True,
             )
             wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
 
