@@ -68,6 +68,11 @@ AzerothCore Database Schema Reference:
 - https://www.azerothcore.org/wiki/database-characters
 - https://www.azerothcore.org/wiki/database-world
 
+在 EC2 上安装完 acore_db_app CLI 之后, 你可以用下面的命令测试:
+
+.. code-block:: bash
+
+    /home/ubuntu/git_repos/acore_db_app-project/.venv/bin/acdb hello
 
 .. _install:
 

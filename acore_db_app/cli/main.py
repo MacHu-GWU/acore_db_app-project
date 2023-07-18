@@ -6,10 +6,6 @@ Acore DB App CLI interface
 
 import fire
 
-from .impl import (
-    get_latest_n_quest,
-)
-
 
 class Quest:
     """
@@ -32,6 +28,11 @@ class Quest:
 
             acoredb quest get_latest_n_quest --char mychar --locale enUS --n 3
         """
+        # 注: 这段代码不能放在文件开头, 因为这段代码会 import cache. 如果我们放在文件开头,
+        # 那么在 bootstrap 的时候是 root user 创建的 cache 数据库, 会导致普通用户没有权限
+        # 使用
+        from .impl import get_latest_n_quest
+
         get_latest_n_quest(
             character=char,
             locale=locale,
