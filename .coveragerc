@@ -5,9 +5,14 @@ omit =
     acore_db_app/docs/*
     acore_db_app/tests/*
     acore_db_app/vendor/*
+    acore_db_app/app/*
+    acore_db_app/cli/*
+    acore_db_app/gui/*
     acore_db_app/_version.py
-    acore_db_app/cli.py
     acore_db_app/paths.py
+    acore_db_app/orm.py
+    acore_db_app/orm_getter.py
+    acore_db_app/orm_tool.py
 
 [report]
 # Regexes for lines to exclude from consideration

@@ -9,7 +9,6 @@ import enum
 import dataclasses
 
 import sqlalchemy as sa
-from rich import print as rprint
 
 from ..orm import Orm
 from ..logger import logger
@@ -178,6 +177,7 @@ def get_enriched_quest_data(
         # 若指定了除英文以外的语言, 则获得任务的本地化文本信息
         # the main table has to be on the left
         if locale is not LocaleEnum.enUS:
+            # 先对 quest_template_locale 子表进行 filter, 只要指定的 locale
             subquery = sa.select(
                 orm.t_quest_template_locale.c.ID,
                 orm.t_quest_template_locale.c.Title,
@@ -189,6 +189,7 @@ def get_enriched_quest_data(
                 subquery.c.Title.label("quest_title_locale"),
             ])
 
+            # 然后再进行 left outer JOIN
             joins = joins.join(
                 # 获得任务的文本信息
                 subquery,
@@ -271,7 +272,7 @@ def get_enriched_quest_data(
         # print(stmt)
         enriched_quest_data_list = list()
         for row in connect.execute(stmt).mappings():
-            # rprint(row)
+            # print(row)
             enriched_quest_data = EnrichedQuestData(**row)
             enriched_quest_data_list.append(enriched_quest_data)
         return enriched_quest_data_list
