@@ -9,7 +9,6 @@
 """
 
 import pickle
-from functools import cached_property
 
 import dataclasses
 import sqlalchemy as sa
@@ -17,6 +16,7 @@ import sqlalchemy as sa
 from .paths import (
     path_metadata_cache,
 )
+from .compat import cached_property
 
 
 @dataclasses.dataclass
