@@ -15,7 +15,19 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
-0.2.1 (2023-06-17)
+0.2.2 (2023-07-17)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Minor Improvements**
+
+- use ``enUS`` as the default locale for ``acdb quest get_latest_n_quest`` command
+
+
+**Bugfixes**
+
+- fix a bug that may break the boostrap script.
+
+
+0.2.1 (2023-07-17)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -24,8 +36,8 @@ x.y.z (Backlog)
 
 **Minor Improvements**
 
-- refactor the ORM cache mechanism using diskcache
-- more docs
+- refactor the ORM cache mechanism using diskcache.
+- more docs.
 
 
 0.1.1 (2023-06-28)

@@ -6,6 +6,8 @@ Acore DB App CLI interface
 
 import fire
 
+from ..app.api import LocaleEnum
+
 
 class Quest:
     """
@@ -15,7 +17,7 @@ class Quest:
     def get_latest_n_quest(
         self,
         char: str,
-        locale: str,
+        locale: str = LocaleEnum.enUS.value,
         n: int = 3,
     ):
         """
