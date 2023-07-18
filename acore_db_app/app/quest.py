@@ -183,7 +183,7 @@ def get_enriched_quest_data(
                 # 获得任务的文本信息
                 orm.t_quest_template_locale,
                 orm.t_character_queststatus.c.quest == orm.t_quest_template_locale.c.ID,
-                isouter=True,
+                # isouter=True,
                 full=True,
             )
             wheres.append(orm.t_quest_template_locale.c.locale == locale.value)
