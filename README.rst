@@ -74,6 +74,13 @@ AzerothCore Database Schema Reference:
 
     /home/ubuntu/git_repos/acore_db_app-project/.venv/bin/acdb hello
 
+Get latest N quests for a character:
+
+.. code-block:: bash
+
+    /home/ubuntu/git_repos/acore_db_app-project/.venv/bin/acdb quest get-latest-n-quest --char ${character}
+
+
 .. _install:
 
 Install
