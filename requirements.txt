@@ -1,7 +1,7 @@
 # Core dependencies goes here
 fire>=0.4.0,<1.0.0
 acore_paths>=0.3.2,<1.0.0
-acore_server>=1.0.1,<2.0.0
+acore_server>=1.0.2,<2.0.0
 aws_ssm_run_command>=1.0.1,<2.0.0
 SQLAlchemy>=2.0.0,<3.0.0
 PyMySQL>=1.0.1,<2.0.0
