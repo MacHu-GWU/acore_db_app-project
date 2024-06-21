@@ -3,7 +3,7 @@
     :target: https://acore-db-app.readthedocs.io/en/latest/
     :alt: Documentation Status
 
-.. image:: https://github.com/MacHu-GWU/acore_db_app-project/workflows/CI/badge.svg
+.. image:: https://github.com/MacHu-GWU/acore_db_app-project/actions/workflows/main.yml/badge.svg
     :target: https://github.com/MacHu-GWU/acore_db_app-project/actions?query=workflow:CI
 
 .. image:: https://codecov.io/gh/MacHu-GWU/acore_db_app-project/branch/main/graph/badge.svg
@@ -50,6 +50,9 @@
 
 Welcome to ``acore_db_app`` Documentation
 ==============================================================================
+.. image:: https://acore-server.readthedocs.io/en/latest/_static/acore_server-logo.png
+    :target: https://acore-server.readthedocs.io/en/latest/
+
 AzerothCore 魔兽世界服务器后端有一个数据库. 基于数据库我们可以开发出很多有创造力的 App. 这里有两个痛点:
 
 1. 出于安全考虑, 我们只能允许位于 AWS EC2 上的游戏服务器能跟数据库网络直连. 在本地的 App 开发过程连接到数据库, 以及让最终的 App 连接到数据库都是一个挑战.
