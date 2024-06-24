@@ -9,7 +9,7 @@ from rich import print as rprint
 
 bsm = BotoSesManager(profile_name="bmt_app_dev_us_east_1")
 env_name = "sbx"
-server_name = "green"
+server_name = "blue"
 server_id = f"{env_name}-{server_name}"
 
 orm = get_orm_for_ssh_tunnel(bsm=bsm, server_id=server_id)
@@ -20,5 +20,5 @@ res = app.quest.list_quest_by_character(orm, "sa")
 app.quest.complete_latest_n_quest(
     orm=orm,
     character="shootingrab",
-    locale=app.LocaleEnum.zhTW,
+    locale=app.LocaleEnum.zhCN,
 )

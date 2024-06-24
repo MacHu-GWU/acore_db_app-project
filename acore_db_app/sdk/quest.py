@@ -17,20 +17,20 @@ def get_latest_n_request(
     locale: str,
     n: int,
 ) -> T.List[quest.EnrichedQuestData]:
-    command_invocation = aws_ssm_run_command.better_boto.send_command_sync(
+    command_invocations = aws_ssm_run_command.better_boto.run_shell_script_sync(
         ssm_client=bsm.ssm_client,
-        instance_id=instance_id,
         commands=[
             (
                 f"{path_acore_db_app_cli} "
                 f"quest get-latest-n-quest --char {character} --locale {locale} --n {n}"
             ),
         ],
+        instance_ids=instance_id,
         delays=1,
         timeout=10,
     )
     enriched_quest_data_list = [
         quest.EnrichedQuestData(**dct)
-        for dct in json.loads(command_invocation.StandardOutputContent)
+        for dct in json.loads(command_invocations[0].StandardOutputContent)
     ]
     return enriched_quest_data_list
