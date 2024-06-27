@@ -53,8 +53,8 @@
 
 Welcome to ``acore_db_app`` Documentation
 ==============================================================================
-.. image:: https://acore-server.readthedocs.io/en/latest/_static/acore_server-logo.png
-    :target: https://acore-server.readthedocs.io/en/latest/
+.. image:: https://acore-db-app.readthedocs.io/en/latest/_static/acore_db_app-logo.png
+    :target: https://acore-db-app.readthedocs.io/en/latest/
 
 AzerothCore 魔兽世界服务器后端有一个数据库. 基于数据库我们可以开发出很多有创造力的 App. 这里有两个痛点:
 

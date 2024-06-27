@@ -4,3 +4,4 @@ twine                                   # make distribution archive
 wheel                                   # make pre-compiled distribution package
 build                                   # build distribution package
 PySide6>=6.4.0,<7.0.0                   # Qt6
+acore_df>=0.1.1,<1.0.0
