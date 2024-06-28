@@ -67,7 +67,7 @@ class Recipe:
         path_json_gz: Path,
     ):
         """
-        Dump receipes to a ``.json.gz`` file.
+        Dump recipes to a ``.json.gz`` file.
         """
         path_json_gz.write_bytes(
             gzip.compress(
@@ -227,3 +227,14 @@ def extract_recipe(
         recipe for recipe in recipe_list if recipe.id in single_spell_recipe_set
     ]
     return single_spell_recipe_list
+
+
+def get_dataframe() -> pl.DataFrame:
+    path = download_file(file_name="recipe.json.gz")
+    recipe_list = Recipe.load_many(path)
+    return Recipe.to_dataframe(recipe_list)
+
+
+def get_recipe_list() -> T.List[Recipe]:
+    path = download_file(file_name="recipe.json.gz")
+    return Recipe.load_many(path)
